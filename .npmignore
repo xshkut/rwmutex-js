@@ -1,0 +1,5 @@
+src
+.vscode
+.devcontainer
+.prettierrc
+tsconfig.json

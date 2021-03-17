@@ -5,10 +5,13 @@
   "main": "built/index",
   "scripts": {
     "build": "rm -rf built && tsc",
-    "quickrun": "ts-node src/index",
     "test": "ts-mocha ./src/tests/*.ts"
   },
-  "author": "",
+  "author": "xshkut",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xshkut/rwmutex-js"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/mocha": "^8.2.1",

@@ -128,9 +128,9 @@ export async function runWithMutexR<T>(
   }
 }
 
-export async function runWithMutexW(
+export async function runWithMutexW<T>(
   mx: RWMutex,
-  fnc: (...args: any) => Promise<any>
+  fnc: (...args: any) => Promise<T>
 ) {
   await mx.Lock();
   try {

@@ -53,8 +53,15 @@ export class RWMutex extends EventEmitter {
     return this._lockQueue.filter((q) => q.type === 'R').length > 0;
   }
 
-  /**Acquire Read Lock. Use it for thread-safe operations */
+  /**
+   * @deprecated use .rLock()
+   */
   async RLock() {
+    return this.rLock();
+  }
+
+  /**Acquire Read Lock. Use it for thread-safe operations */
+  async rLock() {
     if (this._wlocked || this._lockQueue.some((lock) => lock.type === 'W')) {
       await this._enqueueLockAndWait('R');
     }
@@ -63,8 +70,15 @@ export class RWMutex extends EventEmitter {
     this.state = 'RLOCKED';
   }
 
-  /**Acquire Write Lock. Use it for operations that require monopoly resource usage */
+  /**
+   * @deprecated use .lock()
+   */
   async Lock() {
+    return this.lock();
+  }
+
+  /**Acquire Write Lock. Use it for operations that require monopoly resource usage */
+  async lock() {
     if (this._rlocks > 0 || this._wlocked) {
       await this._enqueueLockAndWait('W');
     }
@@ -73,8 +87,15 @@ export class RWMutex extends EventEmitter {
     this.state = 'LOCKED';
   }
 
-  /**Release Read Lock */
+  /**
+   * @deprecated use .rUnlock()
+   */
   RUnlock() {
+    return this.rUnlock();
+  }
+
+  /**Release Read Lock */
+  rUnlock() {
     if (this._rlocks < 1) {
       throw new Error('Cannot RUnlock not rlocked mutex. Fix race conditions');
     }
@@ -87,8 +108,15 @@ export class RWMutex extends EventEmitter {
     }
   }
 
-  /**Release Write Lock */
+  /**
+   * @deprecated use .unlock()
+   */
   Unlock() {
+    return this.unlock();
+  }
+
+  /**Release Write Lock */
+  unlock() {
     if (!this._wlocked) {
       throw new Error(`Cannot Unlock unlocked mutex. Fix race conditions`);
     }

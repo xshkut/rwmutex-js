@@ -133,11 +133,11 @@ export async function runWithMutexR<T>(
   mx: RWMutex,
   fnc: (...args: any[]) => Promise<T>
 ) {
-  await mx.RLock();
+  await mx.rLock();
   try {
     const res = await fnc();
     try {
-      mx.RUnlock();
+      mx.rUnlock();
     } catch (err) {
       throw new Error(
         `Cannot RUnlock after the promise was resolved. Error: ${err}`
@@ -146,7 +146,7 @@ export async function runWithMutexR<T>(
     return res;
   } catch (err) {
     try {
-      mx.RUnlock();
+      mx.rUnlock();
     } catch (err1) {
       throw new Error(
         `Cannot RUnlock after the promise was rejected with error: ${err}. Unlock error: ${err1}`
@@ -160,11 +160,11 @@ export async function runWithMutexW<T>(
   mx: RWMutex,
   fnc: (...args: any) => Promise<T>
 ) {
-  await mx.Lock();
+  await mx.lock();
   try {
     const res = await fnc();
     try {
-      mx.Unlock();
+      mx.unlock();
     } catch (err) {
       throw new Error(
         `Cannot Unlock after the promise was resolved. Error: ${err}`
@@ -173,7 +173,7 @@ export async function runWithMutexW<T>(
     return res;
   } catch (err) {
     try {
-      mx.Unlock();
+      mx.unlock();
     } catch (err1) {
       throw new Error(
         `Cannot unlock after the promise was rejected with error: ${err}. Unlock error: ${err1}`

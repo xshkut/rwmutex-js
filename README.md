@@ -31,18 +31,18 @@ async function waitRandomTime() {
 }
 
 async function updateUser(name: string, age: number) {
-  await rwmutex.Lock();
+  await rwmutex.lock();
   console.log(`Locked for write. Adjusting user: ${name} - ${age}`);
   await waitRandomTime();
   user.name = name;
   await waitRandomTime();
   user.age = age;
   console.log(`Write unlocked. Adjusted user: ${name} - ${age}`);
-  rwmutex.Unlock();
+  rwmutex.unlock();
 }
 
 async function getUserInfo(tag: string) {
-  await rwmutex.RLock();
+  await rwmutex.rLock();
   console.log(
     `locking for read. Getting user info (${tag}): ${user.name} - ${user.age}`
   );
@@ -50,7 +50,7 @@ async function getUserInfo(tag: string) {
   console.log(
     `Read unlocked. Getting same user info (${tag}): ${user.name} - ${user.age}`
   );
-  rwmutex.RUnlock();
+  rwmutex.rUnlock();
 }
 
 // Run all in parallel. See what happens
